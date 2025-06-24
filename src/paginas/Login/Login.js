@@ -45,7 +45,7 @@ export function Login() {
                     <button type="submit" class={style.btnEntrar}>Entrar</button>
                     {erro && <p className={style.erro_login} style={{ color: 'red' }}>{erro}</p>}
                     <div className={style.links}>
-                        <a href="/novoUsuario" className={style.linkCadastrar}>Cadastre-se</a>
+                        <a href="/novo-usuario" className={style.linkCadastrar}>Cadastre-se</a>
                         <a href="/solicitar-recuperacao" className={style.linkSenha}>esqueci minha senha</a>
                     </div>
                 </form>
