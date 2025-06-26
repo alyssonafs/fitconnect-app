@@ -1,6 +1,6 @@
 import style from "./Login.module.css";
 import LogoFitConnect from "./../../assets/LogoSemFundo.png";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import authAPI from '../../services/authAPI';
 import { MdEmail, MdLock } from "react-icons/md";

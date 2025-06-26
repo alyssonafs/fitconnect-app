@@ -1,0 +1,137 @@
+.topbar_conteudo {
+    background-color: #f3f3f3;
+
+    position: fixed;
+    top: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 10vh;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+    padding: 0 5rem;
+}
+
+.logo {
+    width: 15%;
+}
+
+.topbar_acoes {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    max-width: 300px;
+    overflow: hidden;
+}
+
+.usuario_info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.avatar {
+    height: 2.25rem;
+    width: 2.25rem;
+    border-radius: 9999px;
+    background: linear-gradient(to right, #2563eb, #7c3aed);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    flex-shrink: 0;
+}
+
+.avatar p {
+    margin: 0;
+    padding: 0;
+}
+
+.avatar p,
+.usuario_detalhes:hover {
+    cursor: pointer;
+}
+
+.usuario_detalhes {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.usuario_nome {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #111827;
+    line-height: 1;
+    margin: 0;
+}
+
+.menu_dropdown {
+    width: 11%;
+    position: absolute;
+    top: 8vh;
+    right: 5rem;
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+    z-index: 999;
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-right: 4rem;
+}
+
+.menu_dropdown a {
+    color: #111827;
+    text-decoration: none;
+    font-size: 0.875rem;
+    margin: auto;
+}
+
+.inputIcon {
+    left: 0.75rem;
+    top: 0.75rem;
+    height: 1rem;
+    width: 1rem;
+    color: #111827;
+}
+
+.pagina_conteudo {
+    margin-top: 10vh;
+}
+
+.botao_deslogar {
+    text-decoration: none;
+    color: rgb(0, 131, 198);
+    font-size: 3vh;
+
+    display: flex;
+    align-items: center;
+
+    margin-right: 20px;
+    transition: color 0.4s,
+}
+
+.botao_deslogar:hover {
+    color: rgb(214, 23, 23);
+
+
+}
+
+@media (max-width: 768px) {
+    .topbar_acoes {
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.25rem;
+    }
+}

@@ -4,6 +4,7 @@ import { Login } from './paginas/Login/Login';
 import SolicitarRecuperacao from './paginas/SolicitarRecuperacao/SolicitarRecuperacao';
 import RedefinirSenha from './paginas/RedefinirSenha/RedefinirSenha';
 import NovoUsuario from './paginas/NovoUsuario/NovoUsuario';
+import { Dashboard } from './paginas/Dashboard/Dashboard';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path='/solicitar-recuperacao' element={<SolicitarRecuperacao />} />
         <Route path='/redefinir-senha' element={<RedefinirSenha />} />
         <Route path='/novo-usuario' element={<NovoUsuario />} />
+        <Route path='/dashboard' element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   );
