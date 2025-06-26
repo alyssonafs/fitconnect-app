@@ -5,6 +5,7 @@ import SolicitarRecuperacao from './paginas/SolicitarRecuperacao/SolicitarRecupe
 import RedefinirSenha from './paginas/RedefinirSenha/RedefinirSenha';
 import NovoUsuario from './paginas/NovoUsuario/NovoUsuario';
 import { Dashboard } from './paginas/Dashboard/Dashboard';
+import EditarUsuario from './paginas/EditarUsuario/EditarUsuario';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path='/solicitar-recuperacao' element={<SolicitarRecuperacao />} />
         <Route path='/redefinir-senha' element={<RedefinirSenha />} />
         <Route path='/novo-usuario' element={<NovoUsuario />} />
+        <Route path='/editar-usuario' element={<EditarUsuario />} />
         <Route path='/dashboard' element={<Dashboard />} />
       </Routes>
     </BrowserRouter>

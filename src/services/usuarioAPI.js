@@ -1,6 +1,15 @@
 import { HTTPClient } from "./client";
 
 const UsuarioAPI = {
+    async obterAsync(usuarioId) {
+        try {
+            const response = await HTTPClient.get(`/Usuario/Obter/${usuarioId}`);
+            return response.data;
+        } catch (error) {
+            console.error("Erro ao obter usuário: ", error);
+            throw error;
+        }
+    },
     async listarTiposUsuarioAsync() {
         try {
             const response = await HTTPClient.get(`/Usuario/ListarTiposUsuarios`);
@@ -35,6 +44,25 @@ const UsuarioAPI = {
             return response.data;
         } catch (error) {
             console.error("Erro ao criar usuário: ", error);
+            throw error;
+        }
+    },
+    async atualizarAsync(id, nome, email, altura, peso, dataNascimento, genero, tipoUsuario) {
+        try {
+            const usuarioAtualizar = {
+                Id: id,
+                Nome: nome,
+                Email: email,
+                Altura: altura,
+                Peso: peso,
+                DataNascimento: dataNascimento,
+                Genero: genero,
+                TipoUsuario: tipoUsuario
+            };
+            const response = await HTTPClient.put(`/Usuario/Atualizar`, usuarioAtualizar);
+            return response.data;
+        } catch (error) {
+            console.error("Erro ao atualizar usuário: ", error);
             throw error;
         }
     }

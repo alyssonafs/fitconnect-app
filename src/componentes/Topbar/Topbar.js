@@ -4,17 +4,33 @@ import { MdLogout } from "react-icons/md";
 import authAPI from "../../services/authAPI";
 import LogoFitConnect from "./../../assets/LogoSemFundo.png";
 import GetUsuarioToken from '../JwtDecode/GetUsuarioToken';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaRegUser } from "react-icons/fa6";
+import UsuarioAPI from '../../services/usuarioAPI';
 
 
 export function Topbar({ children }) {
 
     const navigate = useNavigate();
 
-    const usuario = GetUsuarioToken();
+    const usuarioToken = GetUsuarioToken();
 
-    const usuarioNome = usuario?.nome;
+    const [nome, setNome] = useState('');
+
+    async function fetchUsuarioNome() {
+        try {
+            const usuario = await UsuarioAPI.obterAsync(usuarioToken.usuarioId);
+            setNome(usuario.nome);
+        } catch (error) {
+            console.error("Erro ao buscar nome do usuário na Topbar", error);
+        }
+    }
+
+    useEffect(() => {
+        fetchUsuarioNome();
+    }, []);
+
+    const usuarioNome = nome;
 
     const usuarioIniciais = (usuarioNome) => {
         const nomeSemAcento = usuarioNome.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -50,7 +66,7 @@ export function Topbar({ children }) {
                         </div>
                         {mostrarMenu && (
                             <div className={style.menu_dropdown}>
-                                <Link to="/usuario"><FaRegUser className={style.inputIcon} /> Visualizar Perfil</Link>
+                                <Link to="/editar-usuario"><FaRegUser className={style.inputIcon} /> Visualizar Perfil</Link>
                             </div>
                         )}
                     </div>
