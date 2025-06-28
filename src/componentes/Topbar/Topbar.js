@@ -54,7 +54,7 @@ export function Topbar({ children }) {
         <div>
             <div className={style.topbar_conteudo}>
                 <div className={style.conteudo_logo}>
-                    <img src={LogoFitConnect} alt="logo" className={style.logo}></img>
+                    <Link className={style.link_logo} to="/dashboard"><img src={LogoFitConnect} alt="logo" className={style.logo}></img></Link>
                 </div>
                 <div className={style.topbar_acoes}>
                     <div className={style.usuario_info} onClick={toggleMenu}>

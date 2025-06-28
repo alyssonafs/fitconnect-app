@@ -54,6 +54,23 @@ export function EditarUsuario() {
     }, []);
 
 
+    const calcularIMC = (peso, altura) => {
+        if (!peso || !altura) return null;
+        const imc = peso / (altura * altura);
+        const imcFormatado = imc.toFixed(2);
+
+        let classificacao = "";
+
+        if (imc < 18.5) classificacao = "Abaixo do peso";
+        else if (imc < 24.9) classificacao = "Peso normal";
+        else if (imc < 29.9) classificacao = "Sobrepeso";
+        else if (imc < 34.9) classificacao = "Obesidade grau 1";
+        else if (imc < 39.9) classificacao = "Obesidade grau 2";
+        else classificacao = "Obesidade grau 3";
+
+        return { imc: imcFormatado, classificacao };
+    };
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setUsuario((prev) => ({ ...prev, [name]: value }));
@@ -140,6 +157,14 @@ export function EditarUsuario() {
                     readOnly={!modoEdicao}
                 />
             </div>
+            {usuario.peso && usuario.altura && (() => {
+                const { imc, classificacao } = calcularIMC(usuario.peso, usuario.altura);
+                return (
+                    <div className={style.imcBox}>
+                        <strong>IMC:</strong> {imc} – <span>{classificacao}</span>
+                    </div>
+                );
+            })()}
             <label className={style.label}>Data nascimento</label>
             <div className={style.inputContainer}>
                 <LiaBirthdayCakeSolid className={style.inputIcon} />
