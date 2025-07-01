@@ -7,3 +7,59 @@
     background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 50%, #f3e8ff 100%);
     padding: 1rem;
 }
+
+.dashboardContainer {
+    padding: 2rem;
+    background-color: #f8fafc;
+}
+
+.botoesAcao {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+    gap: 1rem;
+}
+
+.botoesAcao button {
+    background: linear-gradient(to right, #2563eb, #7c3aed);
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.botoesAcao button:hover {
+    transform: scale(1.05);
+}
+
+.treinosGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+.cardTreino {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.cardTreino h3 {
+    margin-top: 0;
+}
+
+.cardTreino button {
+    margin-top: 1rem;
+    width: 100%;
+    padding: 0.5rem;
+    background-color: #10b981;
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    font-weight: 500;
+}
