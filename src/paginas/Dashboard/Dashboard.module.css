@@ -52,6 +52,18 @@
     margin-top: 0;
 }
 
+.cardInfo {
+    margin-top: 1rem;
+    margin-left: 0.5rem;
+    font-size: 0.9rem;
+    color: #4b5563;
+    margin-bottom: 1rem;
+}
+
+.cardInfo p {
+    margin: 0.25rem 0;
+}
+
 .botoesCard {
     display: flex;
     gap: 0.5rem;

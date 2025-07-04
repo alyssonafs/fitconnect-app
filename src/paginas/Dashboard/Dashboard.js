@@ -134,8 +134,15 @@ export function Dashboard() {
                         ) : (
                             treinos.map((treino) => (
                                 <div key={treino.id} className={style.cardTreino}>
+
                                     <h3>{treino.nome}</h3>
-                                    <p>{treino.descricao}</p>
+
+                                    <div className={style.cardInfo}>
+                                        <p><strong>Personal:</strong> {treino.personalNome || "Desconhecido"}</p>
+                                        <p><strong>Exercícios:</strong> {treino.quantidadeExercicios || 0}</p>
+                                        <p><strong>Tempo estimado:</strong> {treino.tempoEstimado || 0} minutos</p>
+                                    </div>
+                                    
                                     <div className={style.botoesCard}>
                                         {isPersonal && treino.personalId === usuario.id && (
                                             <button onClick={() => abrirModalCompartilhar(treino)}>Compartilhar</button>
