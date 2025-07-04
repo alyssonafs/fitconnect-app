@@ -21,15 +21,14 @@
 }
 
 .logo {
-    width: 15%;
+    width: 19%;
 }
 
 .topbar_acoes {
     display: flex;
     align-items: center;
     gap: 1rem;
-    max-width: 300px;
-    overflow: hidden;
+    max-width: 50%;
 }
 
 .usuario_info {

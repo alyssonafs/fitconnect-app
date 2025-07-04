@@ -10,6 +10,15 @@ const UsuarioAPI = {
             throw error;
         }
     },
+    async listarUsuariosAsync(ativos = true) {
+        try {
+            const response = await HTTPClient.get(`/Usuario/Listar?ativos=${ativos}`);
+            return response.data;
+        } catch (error) {
+            console.error("Erro ao listar os usuários: ", error);
+            throw error;
+        }
+    },
     async listarTiposUsuarioAsync() {
         try {
             const response = await HTTPClient.get(`/Usuario/ListarTiposUsuarios`);

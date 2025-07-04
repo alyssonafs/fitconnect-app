@@ -79,7 +79,7 @@ const TreinoAPI = {
                 TreinoId: treinoId,
                 AlunoId: alunoId
             };
-            const response = await HTTPClient.post(`/TreinoCompartilhado/NovoTreinoCompartilhado`);
+            const response = await HTTPClient.post(`/TreinoCompartilhado/NovoTreinoCompartilhado`, compartilharTreino);
             return response.data;
         } catch (error) {
             console.error("Erro ao compartilhar treino: ", error);

@@ -14,6 +14,11 @@ export function Dashboard() {
     const [treinos, setTreinos] = useState([]);
     const [carregando, setCarregando] = useState(true)
 
+    const [mostrarModal, setMostrarModal] = useState(false);
+    const [treinoSelecionado, setTreinoSelecionado] = useState(null);
+    const [alunosDisponiveis, setAlunosDisponiveis] = useState([]);
+    const [alunoSelecionadoId, setAlunoSelecionadoId] = useState(null);
+
     async function fetchUsuario(usuarioToken) {
         try {
             const response = await UsuarioAPI.obterAsync(usuarioToken.usuarioId);
@@ -54,6 +59,38 @@ export function Dashboard() {
             setCarregando(false);
         }
     }
+
+    const abrirModalCompartilhar = async (treino) => {
+        try {
+            const usuarios = await UsuarioAPI.listarUsuariosAsync(true);
+
+            const usuariosFiltrados = usuarios.filter((u) => u.id !== usuario.id);
+
+            setAlunosDisponiveis(usuariosFiltrados);
+            setTreinoSelecionado(treino);
+            setMostrarModal(true);
+        } catch (error) {
+            console.error("Erro ao buscar usuários:", error);
+            alert("Erro ao carregar lista de usuários.");
+        }
+    };
+
+    const compartilharTreino = async () => {
+        if (!alunoSelecionadoId || !treinoSelecionado) {
+            alert("Por favor, selecione um usuário para compartilhar.");
+            return;
+        }
+        try {
+            await TreinoAPI.compartilharTreinoAsync(treinoSelecionado.id, alunoSelecionadoId);
+            alert("Treino compartilhado com sucesso!");
+            setMostrarModal(false);
+            setAlunoSelecionadoId("");
+            setTreinoSelecionado("");
+        } catch (error) {
+            console.error("Erro ao compartilhar treino:", error);
+            alert("Ocorreu um erro ao compartilhar o treino.");
+        }
+    };
 
     useEffect(() => {
         if (usuarioToken) {
@@ -99,13 +136,50 @@ export function Dashboard() {
                                 <div key={treino.id} className={style.cardTreino}>
                                     <h3>{treino.nome}</h3>
                                     <p>{treino.descricao}</p>
-                                    <button onClick={() => navigate(`/treino/${treino.id}`)}>Ver detalhes</button>
+                                    <div className={style.botoesCard}>
+                                        {isPersonal && treino.personalId === usuario.id && (
+                                            <button onClick={() => abrirModalCompartilhar(treino)}>Compartilhar</button>
+                                        )}
+                                        <button onClick={() => navigate(`/treino/${treino.id}`)}>Ver detalhes</button>
+                                    </div>
                                 </div>
                             ))
                         )}
                     </div>
                 </div>
+
+                {
+                    mostrarModal && (
+                        <div className={style.modalOverlay}>
+                            <div className={style.modalContent}>
+                                <h3>Compartilhar treino: {treinoSelecionado.nome}</h3>
+
+                                <select
+                                    className={style.input}
+                                    value={alunoSelecionadoId || ""}
+                                    onChange={(e) => setAlunoSelecionadoId(parseInt(e.target.value))}
+                                >
+                                    <option value="">Selecione o aluno</option>
+                                    {alunosDisponiveis.map((aluno) => (
+                                        <option key={aluno.id} value={aluno.id}>
+                                            {aluno.nome}
+                                        </option>
+                                    ))}
+                                </select>
+
+                                <div className={style.modalBotoes}>
+                                    <button className={style.btnCompartilhar} onClick={compartilharTreino}>Compartilhar</button>
+                                    <button className={style.btnCancelar} onClick={() => setMostrarModal(false)}>Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                }
+
+
             </Topbar>
         </div>
     )
+
+
 }
