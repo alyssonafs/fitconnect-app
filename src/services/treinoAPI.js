@@ -72,8 +72,7 @@ const TreinoAPI = {
             throw error;
         }
     },
-    async compartilharTreinoAsync(treinoId, alunoId)
-    {
+    async compartilharTreinoAsync(treinoId, alunoId) {
         try {
             const compartilharTreino = {
                 TreinoId: treinoId,
@@ -86,6 +85,20 @@ const TreinoAPI = {
             throw error;
         }
         
+    },
+    async adicionarExericio(treinoId, exercicioId, serie) {
+        try {
+            const exercicioTreino = {
+                Serie: serie,
+                TreinoId: treinoId,
+                ExercicioId: exercicioId                
+            };
+            const response = await HTTPClient.post(`/ExercicioTreino/NovoExercicioTreino`, exercicioTreino);
+            return response.data;
+        } catch (error) {
+            console.error("Erro ao adicionar exercício ao treino: ", error);
+            throw error;
+        }
     }
 }
 

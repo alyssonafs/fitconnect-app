@@ -6,6 +6,7 @@ import RedefinirSenha from './paginas/RedefinirSenha/RedefinirSenha';
 import NovoUsuario from './paginas/NovoUsuario/NovoUsuario';
 import { Dashboard } from './paginas/Dashboard/Dashboard';
 import EditarUsuario from './paginas/EditarUsuario/EditarUsuario';
+import NovoTreino from './paginas/NovoTreino/NovoTreino';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path='/novo-usuario' element={<NovoUsuario />} />
         <Route path='/editar-usuario' element={<EditarUsuario />} />
         <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/criar-treino' element={<NovoTreino />} />
       </Routes>
     </BrowserRouter>
   );
