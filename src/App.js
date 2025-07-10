@@ -7,6 +7,7 @@ import NovoUsuario from './paginas/NovoUsuario/NovoUsuario';
 import { Dashboard } from './paginas/Dashboard/Dashboard';
 import EditarUsuario from './paginas/EditarUsuario/EditarUsuario';
 import NovoTreino from './paginas/NovoTreino/NovoTreino';
+import { DetalhesTreino } from './paginas/DetalhesTreino/DetalhesTreino';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path='/editar-usuario' element={<EditarUsuario />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/criar-treino' element={<NovoTreino />} />
+        <Route path='/treino/:id' element={<DetalhesTreino />} />
       </Routes>
     </BrowserRouter>
   );

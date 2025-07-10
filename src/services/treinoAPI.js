@@ -84,19 +84,29 @@ const TreinoAPI = {
             console.error("Erro ao compartilhar treino: ", error);
             throw error;
         }
-        
+
     },
     async adicionarExericio(treinoId, exercicioId, serie) {
         try {
             const exercicioTreino = {
                 Serie: serie,
                 TreinoId: treinoId,
-                ExercicioId: exercicioId                
+                ExercicioId: exercicioId
             };
             const response = await HTTPClient.post(`/ExercicioTreino/NovoExercicioTreino`, exercicioTreino);
             return response.data;
         } catch (error) {
             console.error("Erro ao adicionar exercício ao treino: ", error);
+            throw error;
+        }
+    },
+    async removerExercicioAsync(exercicioTreinoId) {
+        try {
+            const response = await HTTPClient.delete(`/ExercicioTreino/Deletar/${exercicioTreinoId}`
+            );
+            return response.data;
+        } catch (error) {
+            console.error("Erro ao remover exercício do treino:", error);
             throw error;
         }
     }

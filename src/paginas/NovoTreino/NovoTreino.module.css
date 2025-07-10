@@ -64,5 +64,5 @@
 
 .btnForm:hover {
     background: linear-gradient(to right, #1d4ed8, #6d28d9);
-    transform: scale(1.05);
+    transform: scale(1.005);
 }

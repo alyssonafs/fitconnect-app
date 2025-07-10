@@ -1,0 +1,196 @@
+.conteudo {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 50%, #f3e8ff 100%);
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.card_container {
+    width: 80%;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    border: none;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(4px);
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+.exerciciosContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin: 2rem 0;
+    justify-content: center;
+}
+
+.cardExercicio {
+    width: 300px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.2);
+    padding: 1.5rem;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: transform 0.2s;
+}
+
+.cardExercicio:hover {
+    transform: scale(1.02);
+}
+
+.cardExercicio video {
+    margin-top: 0.5rem;
+    border-radius: 0.375rem;
+}
+
+.acoesTreino {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.edicaoContainer {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.1);
+}
+
+.tituloTreino {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #1f2937;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+
+.label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+}
+
+.inputContainer {
+    position: relative;
+}
+
+.input {
+    margin-bottom: 1rem;
+    display: flex;
+    height: 3rem;
+    width: 100%;
+    border-radius: 0.375rem;
+    border: 1px solid #d1d5db;
+    background-color: white;
+    padding: 0.5rem;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+.cardBtn {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.btnForm {
+    margin-bottom: 1rem;
+    width: 100%;
+    height: 2.5rem;
+    background: linear-gradient(to right, #2563eb, #7c3aed);
+    color: white;
+    font-weight: 500;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    transform: scale(1);
+}
+
+.btnForm:hover {
+    background: linear-gradient(to right, #1d4ed8, #6d28d9);
+    transform: scale(1.005);
+}
+
+.btnEditar {
+    margin-bottom: 1rem;
+    width: 80%;
+    height: 2.5rem;
+    background: linear-gradient(to right, #2563eb, #7c3aed);
+    color: white;
+    font-weight: 500;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    transform: scale(1);
+}
+
+.btnEditar:hover {
+    background: linear-gradient(to right, #1d4ed8, #6d28d9);
+    transform: scale(1.005);
+}
+
+.removerContainer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btnExcluir {
+    width: 30%;
+    height: 2.5rem;
+    background: red;
+    color: white;
+    font-weight: 500;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    transform: scale(1);
+}
+
+.btnExcluir:hover {
+    transform: scale(1.005);
+}
+
+.voltarContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+}
+
+.btnVoltar {
+    width: 20%;
+    height: 2.5rem;
+    background: linear-gradient(to right, #1d4ed8, #6d28d9);
+    color: white;
+    font-weight: 500;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    transform: scale(1);
+}
+
+.btnVoltar:hover {
+    transform: scale(1.005);
+}

@@ -159,7 +159,7 @@ export function NovoTreino() {
                             <h4>Exercícios adicionados:</h4>
                             <ul>
                                 {exerciciosAdicionados.map((ex, index) => (
-                                    <li className={style.input} key={index}>{ex.nome} ({ex.grupoMuscular}) - {ex.series}</li>
+                                    <li className={style.input} key={index}>{ex.nome} - {ex.series}</li>
                                 ))}
                             </ul>
 
