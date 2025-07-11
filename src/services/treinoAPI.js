@@ -109,6 +109,15 @@ const TreinoAPI = {
             console.error("Erro ao remover exercício do treino:", error);
             throw error;
         }
+    },
+    async listarPorGrupoMuscularAsync(grupoMuscularId) {
+        try {
+            const response = await HTTPClient.get(`/Treino/ListarPorGrupoMuscular?grupoMuscular=${grupoMuscularId}`);
+            return response.data;
+        } catch (error) {
+            console.error("Erro ao listar por grupo muscular:", error);
+            throw error;
+        }
     }
 }
 

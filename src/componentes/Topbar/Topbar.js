@@ -43,7 +43,7 @@ export function Topbar({ children }) {
     function toggleMenu() {
         setMostrarMenu(!mostrarMenu);
     }
-    
+
     const handleLogout = async (e) => {
         e.preventDefault();
         authAPI.logoutAsync();
@@ -57,8 +57,8 @@ export function Topbar({ children }) {
                     <Link className={style.link_logo} to="/dashboard"><img src={LogoFitConnect} alt="logo" className={style.logo}></img></Link>
                 </div>
                 <div className={style.topbar_acoes}>
-                    <div className={style.usuario_info} onClick={toggleMenu}>
-                        <div className={style.avatar}>
+                    <div className={style.usuario_info}>
+                        <div className={style.avatar} onClick={toggleMenu}>
                             <p>{usuarioIniciais(usuarioNome)}</p>
                         </div>
                         <div className={style.usuario_detalhes}>
@@ -66,11 +66,11 @@ export function Topbar({ children }) {
                         </div>
                         {mostrarMenu && (
                             <div className={style.menu_dropdown}>
-                                <Link to="/editar-usuario"><FaRegUser className={style.inputIcon} /> Visualizar Perfil</Link>
+                                <Link to="/editar-usuario">Visualizar Perfil</Link>
                             </div>
                         )}
+                        <Link onClick={handleLogout} className={style.botao_deslogar}><MdLogout /></Link>
                     </div>
-                    <Link onClick={handleLogout} className={style.botao_deslogar}><MdLogout /></Link>
                 </div>
             </div>
             <div className={style.pagina_conteudo}>

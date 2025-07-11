@@ -13,6 +13,57 @@
     background-color: #f8fafc;
 }
 
+.dashboardHeader {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.dashboardHeader h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1f2937; /* cinza escuro */
+}
+
+.filtroEacoes {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.filtroContainer {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+}
+
+.filtroContainer label {
+    font-size: 0.9rem;
+    color: #374151; /* cinza médio */
+    margin-bottom: 0.25rem;
+}
+
+.select {
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid #d1d5db;
+    background-color: white;
+    padding: 0 0.75rem;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4);
+}
+
+
 .botoesAcao {
     display: flex;
     justify-content: flex-end;
@@ -21,6 +72,7 @@
 }
 
 .botoesAcao button {
+    height: 3rem;
     background: linear-gradient(to right, #2563eb, #7c3aed);
     color: white;
     font-weight: 600;

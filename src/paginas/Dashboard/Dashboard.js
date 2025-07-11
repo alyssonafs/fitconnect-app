@@ -2,6 +2,7 @@ import GetUsuarioToken from '../../componentes/JwtDecode/GetUsuarioToken';
 import { Topbar } from '../../componentes/Topbar/Topbar';
 import TreinoAPI from '../../services/treinoAPI';
 import UsuarioAPI from '../../services/usuarioAPI';
+import ExercicioAPI from '../../services/exercicioAPI';
 import style from './Dashboard.module.css';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +14,9 @@ export function Dashboard() {
     const navigate = useNavigate();
     const [treinos, setTreinos] = useState([]);
     const [carregando, setCarregando] = useState(true)
+
+    const [gruposMusculares, setGruposMusculares] = useState([]);
+    const [grupoSelecionado, setGrupoSelecionado] = useState("");
 
     const [mostrarModal, setMostrarModal] = useState(false);
     const [treinoSelecionado, setTreinoSelecionado] = useState(null);
@@ -30,13 +34,18 @@ export function Dashboard() {
 
     async function fetchTreinosPersonal() {
         try {
-            const criados = await TreinoAPI.listarTreinosPerosnalAsync(usuario.id);
+            let todosTreinos = [];
 
-            const treinosIds = await TreinoAPI.listarTreinosAlunoAsync(usuario.id);
-            const promises = treinosIds.map(item => TreinoAPI.obterAsync(item.treinoId));
-            const compartilhados = await Promise.all(promises);
+            if (grupoSelecionado) {
+                todosTreinos = await TreinoAPI.listarPorGrupoMuscularAsync(parseInt(grupoSelecionado));
+            } else {
+                const criados = await TreinoAPI.listarTreinosPerosnalAsync(usuario.id);
+                const treinosIds = await TreinoAPI.listarTreinosAlunoAsync(usuario.id);
+                const promises = treinosIds.map(item => TreinoAPI.obterAsync(item.treinoId));
+                const compartilhados = await Promise.all(promises);
+                todosTreinos = [...criados, ...compartilhados];
+            }
 
-            const todosTreinos = [...criados, ...compartilhados];
             setTreinos(todosTreinos);
         } catch (error) {
             console.error("Erro ao buscar treinos do personal:", error);
@@ -47,17 +56,37 @@ export function Dashboard() {
 
     async function fetchTreinosAluno() {
         try {
-            const treinosIds = await TreinoAPI.listarTreinosAlunoAsync(usuario.id);
+            let todosTreinos = [];
 
-            const promises = treinosIds.map(item => TreinoAPI.obterAsync(item.treinoId));
-            const treinosDetalhados = await Promise.all(promises);
+            if (grupoSelecionado) {
+                todosTreinos = await TreinoAPI.listarPorGrupoMuscularAsync(parseInt(grupoSelecionado));
+            } else {
+                const treinosIds = await TreinoAPI.listarTreinosAlunoAsync(usuario.id);
 
-            setTreinos(treinosDetalhados);
+                const promises = treinosIds.map(item => TreinoAPI.obterAsync(item.treinoId));
+                const treinosDetalhados = await Promise.all(promises);
+                todosTreinos = [...treinosDetalhados];
+            }
+            setTreinos(todosTreinos);
         } catch (error) {
             console.error("Erro ao buscar treinos do aluno:", error);
         } finally {
             setCarregando(false);
         }
+    }
+
+    async function fetchGruposMusculares() {
+        try {
+            const grupos = await ExercicioAPI.listarTiposGruposMuscularesAsync();
+            setGruposMusculares(grupos);
+        } catch (error) {
+            alert("Erro ao buscar grupos musculares!");
+        }
+    }
+
+    function handleGrupoChange(e) {
+        const valor = e.target.value;
+        setGrupoSelecionado(valor);
     }
 
     const abrirModalCompartilhar = async (treino) => {
@@ -101,13 +130,15 @@ export function Dashboard() {
     useEffect(() => {
         if (!usuario) return;
 
+        fetchGruposMusculares();
+
         if (usuario.tipoUsuario === 0) {
             fetchTreinosPersonal();
         } else {
             fetchTreinosAluno();
         }
 
-    }, [usuario]);
+    }, [usuario, grupoSelecionado]);
 
     if (!usuario) return <p>Carregando usuário...</p>;
 
@@ -117,13 +148,31 @@ export function Dashboard() {
         <div className={style.conteudo}>
             <Topbar>
                 <div className={style.dashboardContainer}>
-                    <h2>Olá, {usuario.nome}!</h2>
+                    <div className={style.dashboardHeader}>
+                        <h2>Olá, {usuario.nome}!</h2>
+                        <div className={style.filtroEacoes}>
+                            <div className={style.filtroContainer}>
+                                <label htmlFor="grupoMuscular">Filtrar por grupo muscular:</label>
+                                <select
+                                    id="grupoMuscular"
+                                    value={grupoSelecionado}
+                                    onChange={handleGrupoChange}
+                                    className={style.select}
+                                >
+                                    <option value="">Todos</option>
+                                    {gruposMusculares.map(grupo => (
+                                        <option key={grupo.id} value={grupo.id}>{grupo.nome}</option>
+                                    ))}
+                                </select>
+                            </div>
 
-                    <div className={style.botoesAcao}>
-                        {isPersonal && (
-                            <button onClick={() => navigate("/criar-treino")}>+ Criar Treino</button>
-                        )}
-                        <button onClick={() => navigate("/assistente-treino")}>IA: Criar Treino</button>
+                            <div className={style.botoesAcao}>
+                                {isPersonal && (
+                                    <button onClick={() => navigate("/criar-treino")}>+ Criar Treino</button>
+                                )}
+                                <button onClick={() => navigate("/assistente-treino")}>IA: Criar Treino</button>
+                            </div>
+                        </div>
                     </div>
 
                     <div className={style.treinosGrid}>
@@ -142,7 +191,7 @@ export function Dashboard() {
                                         <p><strong>Exercícios:</strong> {treino.quantidadeExercicios || 0}</p>
                                         <p><strong>Tempo estimado:</strong> {treino.tempoEstimado || 0} minutos</p>
                                     </div>
-                                    
+
                                     <div className={style.botoesCard}>
                                         {isPersonal && treino.personalId === usuario.id && (
                                             <button onClick={() => abrirModalCompartilhar(treino)}>Compartilhar</button>
