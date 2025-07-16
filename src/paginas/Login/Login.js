@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import authAPI from '../../services/authAPI';
 import { MdEmail, MdLock } from "react-icons/md";
+import { jwtDecode } from 'jwt-decode';
 
 export function Login() {
 
@@ -24,6 +25,20 @@ export function Login() {
         }
 
     };
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            try {
+                const { exp } = jwtDecode(token);
+                if (Date.now() < exp * 1000) {
+                    navigate('/dashboard', { replace: true });
+                }
+            } catch {
+                
+            }
+        }
+    }, [navigate]);
 
     return (
         <div className={style.conteudo}>

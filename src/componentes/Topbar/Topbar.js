@@ -4,18 +4,15 @@ import { MdLogout } from "react-icons/md";
 import authAPI from "../../services/authAPI";
 import LogoFitConnect from "./../../assets/LogoSemFundo.png";
 import GetUsuarioToken from '../JwtDecode/GetUsuarioToken';
-import { useState, useEffect } from 'react';
-import { FaRegUser } from "react-icons/fa6";
+import { useState, useEffect, useRef } from 'react';
 import UsuarioAPI from '../../services/usuarioAPI';
 
-
 export function Topbar({ children }) {
-
     const navigate = useNavigate();
-
     const usuarioToken = GetUsuarioToken();
-
     const [nome, setNome] = useState('');
+    const [mostrarMenu, setMostrarMenu] = useState(false);
+    const menuRef = useRef(null);
 
     async function fetchUsuarioNome() {
         try {
@@ -30,23 +27,28 @@ export function Topbar({ children }) {
         fetchUsuarioNome();
     }, []);
 
-    const usuarioNome = nome;
-
     const usuarioIniciais = (usuarioNome) => {
-        const nomeSemAcento = usuarioNome.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-
+        const nomeSemAcento = usuarioNome.normalize("NFD").replace(/[̀-\u036f]/g, "");
         return nomeSemAcento.substring(0, 2).toUpperCase();
     }
 
-    const [mostrarMenu, setMostrarMenu] = useState(false);
-
     function toggleMenu() {
-        setMostrarMenu(!mostrarMenu);
+        setMostrarMenu(prev => !prev);
     }
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (menuRef.current && !menuRef.current.contains(event.target)) {
+                setMostrarMenu(false);
+            }
+        }
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [menuRef]);
 
     const handleLogout = async (e) => {
         e.preventDefault();
-        authAPI.logoutAsync();
+        await authAPI.logoutAsync();
         navigate('/');
     }
 
@@ -54,22 +56,31 @@ export function Topbar({ children }) {
         <div>
             <div className={style.topbar_conteudo}>
                 <div className={style.conteudo_logo}>
-                    <Link className={style.link_logo} to="/dashboard"><img src={LogoFitConnect} alt="logo" className={style.logo}></img></Link>
+                    <Link className={style.link_logo} to="/dashboard">
+                        <img src={LogoFitConnect} alt="logo" className={style.logo} />
+                    </Link>
                 </div>
-                <div className={style.topbar_acoes}>
+                <div className={style.topbar_acoes} ref={menuRef}>
                     <div className={style.usuario_info}>
                         <div className={style.avatar} onClick={toggleMenu}>
-                            <p>{usuarioIniciais(usuarioNome)}</p>
+                            <p>{usuarioIniciais(nome)}</p>
                         </div>
                         <div className={style.usuario_detalhes}>
-                            <p className={style.usuario_nome}>{usuarioNome}</p>
+                            <p
+                                className={style.usuario_nome}
+                                title={nome}
+                            >
+                                {nome}
+                            </p>
                         </div>
                         {mostrarMenu && (
                             <div className={style.menu_dropdown}>
                                 <Link to="/editar-usuario">Visualizar Perfil</Link>
                             </div>
                         )}
-                        <Link onClick={handleLogout} className={style.botao_deslogar}><MdLogout /></Link>
+                        <Link onClick={handleLogout} className={style.botao_deslogar}>
+                            <MdLogout />
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -77,7 +88,7 @@ export function Topbar({ children }) {
                 {children}
             </div>
         </div>
-    )
+    );
 }
 
 export default Topbar;

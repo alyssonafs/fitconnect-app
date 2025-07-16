@@ -2,6 +2,7 @@ import style from './NovoUsuario.module.css';
 import LogoFitConnect from "./../../assets/LogoSemFundo.png";
 import { MdEmail, MdLock, MdOutlineSupervisedUserCircle } from "react-icons/md";
 import { useState, useEffect } from 'react';
+import { AiOutlineWarning } from 'react-icons/ai';
 import { FaRegUser, FaWeightScale } from "react-icons/fa6";
 import { GiBodyHeight } from "react-icons/gi";
 import { LiaBirthdayCakeSolid } from "react-icons/lia";
@@ -20,6 +21,8 @@ export function NovoUsuario() {
     const [tiposUsuarios, setTiposUsuarios] = useState([]);
     const [tipoGenero, setTipoGenero] = useState('');
     const [tiposGeneros, setTiposGeneros] = useState([]);
+    const [emailError, setEmailError] = useState('');
+    const [checkingEmail, setCheckingEmail] = useState(false);
 
     const navigate = useNavigate();
 
@@ -41,6 +44,33 @@ export function NovoUsuario() {
         }
     };
 
+    const checkEmailExists = async (email) => {
+        setCheckingEmail(true);
+        try {
+            const user = await UsuarioAPI.obterPorEmailAsync(email);
+            return !!user;
+        } catch (error) {
+            console.error('Erro ao verificar e‑mail:', error);
+            return false;
+        } finally {
+            setCheckingEmail(false);
+        }
+    };
+
+    const handleEmailBlur = async () => {
+        if (!email) return;
+        const exists = await checkEmailExists(email);
+        if (exists) {
+            setEmailError('Este e‑mail já está em uso.');
+        }
+    };
+
+    useEffect(() => {
+        if (emailError) {
+            setEmailError('');
+        }
+    }, [email]);
+
     useEffect(() => {
         fetchTiposUsuarios();
         fetchTiposGeneros();
@@ -51,6 +81,7 @@ export function NovoUsuario() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (emailError) return;
         try {
             const tipoGeneroId = parseInt(tipoGenero);
             const tipoUsuarioId = parseInt(tipoUsuario);
@@ -78,7 +109,19 @@ export function NovoUsuario() {
                     <label className={style.label}>Email</label>
                     <div className={style.inputContainer}>
                         <MdEmail className={style.inputIcon} />
-                        <input type='email' placeholder='seu@email.com' required className={style.input} value={email} onChange={(e) => setEmail(e.target.value)} />
+                        <input type='email' placeholder='seu@email.com' required className={`${style.input} ${emailError ? style.error : ''}`} value={email} onChange={(e) => setEmail(e.target.value)} onBlur={handleEmailBlur} />
+                        {checkingEmail && (
+                            <div className={style.errorMessage}>
+                                <AiOutlineWarning /> Verificando e‑mail…
+                            </div>
+                        )
+                        }
+                        {emailError && (
+                            <div className={style.errorMessage}>
+                                <AiOutlineWarning /> {emailError}
+                            </div>
+                        )
+                        }
                     </div>
                     <label className={style.label}>Senha</label>
                     <div className={style.inputContainer}>
@@ -134,7 +177,7 @@ export function NovoUsuario() {
                             ))}
                         </select>
                     </div>
-                    <button type="submit" class={style.btnCadastrar}>Cadastrar-se</button>
+                    <button type="submit" class={style.btnCadastrar} disabled={!!emailError || checkingEmail}>Cadastrar-se</button>
                 </form>
             </div>
         </div>

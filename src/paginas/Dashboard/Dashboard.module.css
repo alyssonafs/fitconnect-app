@@ -23,7 +23,8 @@
 .dashboardHeader h2 {
     font-size: 1.5rem;
     font-weight: 600;
-    color: #1f2937; /* cinza escuro */
+    color: #1f2937;
+    /* cinza escuro */
 }
 
 .filtroEacoes {
@@ -43,7 +44,8 @@
 
 .filtroContainer label {
     font-size: 0.9rem;
-    color: #374151; /* cinza médio */
+    color: #374151;
+    /* cinza médio */
     margin-bottom: 0.25rem;
 }
 
@@ -98,10 +100,17 @@
     padding: 1rem;
     border-radius: 0.5rem;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
 }
 
 .cardTreino h3 {
     margin-top: 0;
+    max-width: 20ch;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: default;
 }
 
 .cardInfo {
@@ -119,7 +128,8 @@
 .botoesCard {
     display: flex;
     gap: 0.5rem;
-    margin-top: 0.5rem;
+    margin-top: auto;
+    justify-content: flex-end;
 }
 
 .cardTreino button {

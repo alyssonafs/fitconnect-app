@@ -69,6 +69,22 @@
     box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
 }
 
+.input.error {
+    border-color: #e74c3c;
+}
+
+.errorMessage {
+    display: flex;
+    align-items: center;
+    color: #e74c3c;
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    position: absolute;
+    bottom: -1.3rem;
+    left: 0;
+}
+
 .btnCadastrar {
     margin-bottom: 1rem;
     width: 100%;
@@ -86,4 +102,10 @@
 .btnCadastrar:hover {
     background: linear-gradient(to right, #1d4ed8, #6d28d9);
     transform: scale(1.05);
+}
+
+.btnCadastrar:disabled {
+    background: #e74c3c;
+    cursor: not-allowed;
+    opacity: 0.8;
 }

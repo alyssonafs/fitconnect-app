@@ -10,6 +10,15 @@ const UsuarioAPI = {
             throw error;
         }
     },
+    async obterPorEmailAsync(email) {
+        try {
+            const response = await HTTPClient.get(`/Usuario/ObterPorEmail/${email}`);
+            return response.data;
+        } catch (error) {
+            console.error("Erro ao obter usuário: ", error);
+            throw error;
+        }
+    },
     async listarUsuariosAsync(ativos = true) {
         try {
             const response = await HTTPClient.get(`/Usuario/Listar?ativos=${ativos}`);

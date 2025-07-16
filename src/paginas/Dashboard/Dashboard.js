@@ -184,7 +184,7 @@ export function Dashboard() {
                             treinos.map((treino) => (
                                 <div key={treino.id} className={style.cardTreino}>
 
-                                    <h3>{treino.nome}</h3>
+                                    <h3 title={treino.nome}>{treino.nome}</h3>
 
                                     <div className={style.cardInfo}>
                                         <p><strong>Personal:</strong> {treino.personalNome || "Desconhecido"}</p>

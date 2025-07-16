@@ -118,6 +118,22 @@ const TreinoAPI = {
             console.error("Erro ao listar por grupo muscular:", error);
             throw error;
         }
+    },
+
+    async gerarTreinoIaAsync(personalId, usuarioId, gruposMusculares, objetivo) {
+        try {
+            const response = await HTTPClient.post('/Treino/GerarTreinoIa', {
+                personalId,
+                usuarioId,
+                gruposMusculares,
+                objetivo
+            });
+
+            return response.data;
+        } catch (error) {
+            console.error("Erro ao criar treino pela IA:", error);
+            throw error;
+        }
     }
 }
 

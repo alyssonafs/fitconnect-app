@@ -1,6 +1,7 @@
 import style from './EditarUsuario.module.css';
 import { MdEmail, MdLock, MdOutlineSupervisedUserCircle } from "react-icons/md";
 import { useState, useEffect } from 'react';
+import { AiOutlineWarning } from 'react-icons/ai';
 import { FaRegUser, FaWeightScale } from "react-icons/fa6";
 import { GiBodyHeight } from "react-icons/gi";
 import { LiaBirthdayCakeSolid } from "react-icons/lia";
@@ -17,6 +18,8 @@ export function EditarUsuario() {
     const [usuario, setUsuario] = useState(null);
     const [modoEdicao, setModoEdicao] = useState(false);
     const id = usuarioToken.usuarioId;
+    const [emailError, setEmailError] = useState('');
+    const [checkingEmail, setCheckingEmail] = useState(false);
 
     const navigate = useNavigate();
 
@@ -46,6 +49,32 @@ export function EditarUsuario() {
             console.error('Erro ao buscar tipos de usuários: ', error);
         }
     };
+
+    const checkEmailExists = async (email) => {
+        setCheckingEmail(true);
+        try {
+            const resp = await UsuarioAPI.obterPorEmailAsync(email);
+            return resp && resp.id !== usuario.id;
+        } catch {
+            return false;
+        } finally {
+            setCheckingEmail(false);
+        }
+    };
+
+    const handleEmailBlur = async (e) => {
+        const valor = e.target.value;
+        if (!valor) return;
+        const exists = await checkEmailExists(valor);
+        setEmailError(exists
+            ? 'Este e‑mail já está em uso por outro usuário.'
+            : ''
+        );
+    };
+
+    useEffect(() => {
+        if (emailError) setEmailError('');
+    }, [usuario?.email]);
 
     useEffect(() => {
         fetchUsuario(usuarioToken);
@@ -78,6 +107,7 @@ export function EditarUsuario() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (emailError) return;
         try {
             await UsuarioAPI.atualizarAsync(
                 usuario.id,
@@ -123,11 +153,22 @@ export function EditarUsuario() {
                     type='email'
                     name='email'
                     placeholder='seu@email.com'
-                    className={style.input}
+                    className={`${style.input} ${emailError ? style.error : ''}`}
                     value={usuario.email}
                     onChange={modoEdicao ? handleChange : undefined}
+                    onBlur={modoEdicao ? handleEmailBlur : undefined}
                     readOnly={!modoEdicao}
                 />
+                {checkingEmail && (
+                    <div className={style.errorMessage}>
+                        <AiOutlineWarning /> Verificando e‑mail…
+                    </div>
+                )}
+                {emailError && (
+                    <div className={style.errorMessage}>
+                        <AiOutlineWarning /> {emailError}
+                    </div>
+                )}
             </div>
             <label className={style.label}>Altura</label>
             <div className={style.inputContainer}>
@@ -137,7 +178,7 @@ export function EditarUsuario() {
                     name='altura'
                     step="0.01"
                     placeholder='sua altura'
-                    className={style.input}
+                    className={`${style.input} ${emailError ? style.error : ''}`}
                     value={usuario.altura}
                     onChange={modoEdicao ? handleChange : undefined}
                     readOnly={!modoEdicao}
@@ -230,7 +271,13 @@ export function EditarUsuario() {
                         <form onSubmit={handleSubmit} className={style.formContainer}>
                             {renderCampos(true)}
                             <div style={{ marginTop: "2rem" }}>
-                                <button type="submit" className={style.btnEditar}>Salvar alterações</button>
+                                <button
+                                    type="submit"
+                                    className={style.btnEditar}
+                                    disabled={!!emailError || checkingEmail}
+                                >
+                                    Salvar alterações
+                                </button>
                             </div>
                         </form>
                     ) : (

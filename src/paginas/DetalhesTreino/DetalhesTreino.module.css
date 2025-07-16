@@ -36,8 +36,21 @@
     text-align: left;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    transition: transform 0.2s;
+}
+
+.cardExercicio>h4,
+.cardExercicio>p {
+    margin-bottom: 0.5rem;
+}
+
+.videoContainer {
+    margin-top: auto;
+    width: 100%;
+}
+
+.videoContainer iframe,
+.cardExercicio video {
+    max-height: 180px;
 }
 
 .cardExercicio:hover {
@@ -45,8 +58,9 @@
 }
 
 .cardExercicio video {
-    margin-top: 0.5rem;
+    margin-top: auto;
     border-radius: 0.375rem;
+    width: 100%;
 }
 
 .acoesTreino {

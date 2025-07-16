@@ -106,6 +106,7 @@ export function NovoTreino() {
                                 type="text"
                                 placeholder="Nome do treino"
                                 value={nomeTreino}
+                                maxLength={100}
                                 onChange={(e) => setNomeTreino(e.target.value)}
                             />
                             <button className={style.btnForm} onClick={criarTreino}>Criar Treino</button>
