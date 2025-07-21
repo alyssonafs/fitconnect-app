@@ -101,11 +101,10 @@ export function DetalhesTreino() {
 
             const exercicio = todosExercicios.find(e => e.id === exercicioId);
 
-            // Adicionando manualmente os dados para manter consistência
             const novoExercicio = {
                 ...exercicio,
                 exercicioId: exercicioId,
-                exercicioTreinoId: response.id, // supondo que o backend retorne o id da nova relação
+                exercicioTreinoId: response.id,
                 series: series
             };
 

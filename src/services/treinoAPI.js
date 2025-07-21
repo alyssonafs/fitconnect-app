@@ -32,7 +32,7 @@ const TreinoAPI = {
             throw error;
         }
     },
-    async listarTreinosPerosnalAsync(personalId) {
+    async listarTreinosPersonalAsync(personalId) {
         try {
             const response = await HTTPClient.get(`/Treino/Listar/Personal?personalId=${personalId}`);
             return response.data;
@@ -110,9 +110,14 @@ const TreinoAPI = {
             throw error;
         }
     },
-    async listarPorGrupoMuscularAsync(grupoMuscularId) {
+    async listarPorGrupoMuscularAsync(grupoMuscularId, usuarioId) {
         try {
-            const response = await HTTPClient.get(`/Treino/ListarPorGrupoMuscular?grupoMuscular=${grupoMuscularId}`);
+            const response = await HTTPClient.get(`/Treino/ListarPorGrupoMuscular`, {
+                params: {
+                    grupoMuscular: grupoMuscularId,
+                    usuarioId: usuarioId
+                }
+            });
             return response.data;
         } catch (error) {
             console.error("Erro ao listar por grupo muscular:", error);
@@ -120,14 +125,9 @@ const TreinoAPI = {
         }
     },
 
-    async gerarTreinoIaAsync(personalId, usuarioId, gruposMusculares, objetivo) {
+    async gerarTreinoIaAsync(treinoRequisicao) {
         try {
-            const response = await HTTPClient.post('/Treino/GerarTreinoIa', {
-                personalId,
-                usuarioId,
-                gruposMusculares,
-                objetivo
-            });
+            const response = await HTTPClient.post('/Treino/GerarTreinoIa', treinoRequisicao);
 
             return response.data;
         } catch (error) {

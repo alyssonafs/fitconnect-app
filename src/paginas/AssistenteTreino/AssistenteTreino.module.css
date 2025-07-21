@@ -74,7 +74,15 @@
     transform: scale(1.005);
 }
 
+.gruposContainer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+}
+
 .grupoBtn {
+    margin: 0.25rem;
     padding: 0.5rem 1rem;
     border-radius: 9999px;
     border: 1px solid #d1d5db;
@@ -85,6 +93,12 @@
 }
 
 .grupoBtnSelecionado {
+    margin: 0.25rem;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
     background-color: #3b82f6;
     color: white;
     border: 1px solid #3b82f6;

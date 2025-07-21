@@ -32,14 +32,14 @@ export function Dashboard() {
         }
     }
 
-    async function fetchTreinosPersonal() {
+    async function fetchTreinos() {
         try {
             let todosTreinos = [];
 
             if (grupoSelecionado) {
-                todosTreinos = await TreinoAPI.listarPorGrupoMuscularAsync(parseInt(grupoSelecionado));
+                todosTreinos = await TreinoAPI.listarPorGrupoMuscularAsync(parseInt(grupoSelecionado), usuario.id);
             } else {
-                const criados = await TreinoAPI.listarTreinosPerosnalAsync(usuario.id);
+                const criados = await TreinoAPI.listarTreinosPersonalAsync(usuario.id);
                 const treinosIds = await TreinoAPI.listarTreinosAlunoAsync(usuario.id);
                 const promises = treinosIds.map(item => TreinoAPI.obterAsync(item.treinoId));
                 const compartilhados = await Promise.all(promises);
@@ -49,27 +49,6 @@ export function Dashboard() {
             setTreinos(todosTreinos);
         } catch (error) {
             console.error("Erro ao buscar treinos do personal:", error);
-        } finally {
-            setCarregando(false);
-        }
-    }
-
-    async function fetchTreinosAluno() {
-        try {
-            let todosTreinos = [];
-
-            if (grupoSelecionado) {
-                todosTreinos = await TreinoAPI.listarPorGrupoMuscularAsync(parseInt(grupoSelecionado));
-            } else {
-                const treinosIds = await TreinoAPI.listarTreinosAlunoAsync(usuario.id);
-
-                const promises = treinosIds.map(item => TreinoAPI.obterAsync(item.treinoId));
-                const treinosDetalhados = await Promise.all(promises);
-                todosTreinos = [...treinosDetalhados];
-            }
-            setTreinos(todosTreinos);
-        } catch (error) {
-            console.error("Erro ao buscar treinos do aluno:", error);
         } finally {
             setCarregando(false);
         }
@@ -131,12 +110,7 @@ export function Dashboard() {
         if (!usuario) return;
 
         fetchGruposMusculares();
-
-        if (usuario.tipoUsuario === 0) {
-            fetchTreinosPersonal();
-        } else {
-            fetchTreinosAluno();
-        }
+        fetchTreinos();
 
     }, [usuario, grupoSelecionado]);
 
@@ -191,6 +165,13 @@ export function Dashboard() {
                                         <p><strong>Exercícios:</strong> {treino.quantidadeExercicios || 0}</p>
                                         <p><strong>Tempo estimado:</strong> {treino.tempoEstimado || 0} minutos</p>
                                     </div>
+
+                                    {treino.geradoPorIa && (
+                                        <div className={style.geradoPorIa}>
+                                            <p><strong>Aviso:</strong> Este treino foi gerado por IA.</p>
+                                            <p>Consulte um personal trainer, pois esta é apenas uma sugestão e você deve confirmar seus dados e vieses.</p>
+                                        </div>
+                                    )}
 
                                     <div className={style.botoesCard}>
                                         {isPersonal && treino.personalId === usuario.id && (
