@@ -177,7 +177,7 @@ export function Dashboard() {
                                         {isPersonal && treino.personalId === usuario.id && (
                                             <button onClick={() => abrirModalCompartilhar(treino)}>Compartilhar</button>
                                         )}
-                                        <button onClick={() => navigate(`/treino/${treino.id}`)}>Ver detalhes</button>
+                                        <button onClick={() => navigate(`/treino/${treino.id}`)}>Exibir Treino</button>
                                     </div>
                                 </div>
                             ))
