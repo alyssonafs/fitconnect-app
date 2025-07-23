@@ -1,0 +1,36 @@
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: linear-gradient(to right, #dbeafe, #e0e7ff);
+  padding: 2rem;
+}
+
+h1 {
+  font-size: 3rem;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+p {
+  font-size: 1.25rem;
+  color: #374151;
+  margin-bottom: 2rem;
+}
+
+.link {
+  font-size: 1rem;
+  color: white;
+  background: linear-gradient(to right, #2563eb, #7c3aed);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: transform 0.2s;
+}
+
+.link:hover {
+  transform: scale(1.05);
+}

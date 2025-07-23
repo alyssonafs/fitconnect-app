@@ -13,6 +13,7 @@ import PrivateRoute from './componentes/PrivateRoute/PrivateRoute';
 import PublicRoute from './componentes/PublicRoute/PublicRoute';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { PaginaNaoEncontrada } from './paginas/PaginaNaoEncontrada/PaginaNaoEncontrada';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path='/criar-treino' element={<PrivateRoute><NovoTreino /></PrivateRoute>} />
         <Route path='/treino/:id' element={<PrivateRoute><DetalhesTreino /></PrivateRoute>} />
         <Route path='/assistente-treino' element={<PrivateRoute><AssistenteTreino /></PrivateRoute>} />
+        <Route path='*' element={<PaginaNaoEncontrada />} />
       </Routes>
       <ToastContainer position="top-right" autoClose={2000} hideProgressBar={false} />
     </BrowserRouter>
