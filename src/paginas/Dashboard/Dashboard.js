@@ -6,6 +6,7 @@ import ExercicioAPI from '../../services/exercicioAPI';
 import style from './Dashboard.module.css';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Select from "react-select";
 
 export function Dashboard() {
 
@@ -21,7 +22,7 @@ export function Dashboard() {
     const [mostrarModal, setMostrarModal] = useState(false);
     const [treinoSelecionado, setTreinoSelecionado] = useState(null);
     const [alunosDisponiveis, setAlunosDisponiveis] = useState([]);
-    const [alunoSelecionadoId, setAlunoSelecionadoId] = useState(null);
+    const [alunoSelecionadoId, setAlunoSelecionadoId] = useState([]);
 
     async function fetchUsuario(usuarioToken) {
         try {
@@ -85,11 +86,13 @@ export function Dashboard() {
 
     const compartilharTreino = async () => {
         if (!alunoSelecionadoId || !treinoSelecionado) {
-            alert("Por favor, selecione um usuário para compartilhar.");
+            alert("Por favor, selecione pelo menos um aluno para compartilhar.");
             return;
         }
         try {
-            await TreinoAPI.compartilharTreinoAsync(treinoSelecionado.id, alunoSelecionadoId);
+            for (const aluno of alunoSelecionadoId) {
+                await TreinoAPI.compartilharTreinoAsync(treinoSelecionado.id, aluno.value);
+            }
             alert("Treino compartilhado com sucesso!");
             setMostrarModal(false);
             setAlunoSelecionadoId("");
@@ -191,18 +194,16 @@ export function Dashboard() {
                             <div className={style.modalContent}>
                                 <h3>Compartilhar treino: {treinoSelecionado.nome}</h3>
 
-                                <select
-                                    className={style.input}
-                                    value={alunoSelecionadoId || ""}
-                                    onChange={(e) => setAlunoSelecionadoId(parseInt(e.target.value))}
-                                >
-                                    <option value="">Selecione o aluno</option>
-                                    {alunosDisponiveis.map((aluno) => (
-                                        <option key={aluno.id} value={aluno.id}>
-                                            {aluno.nome}
-                                        </option>
-                                    ))}
-                                </select>
+                                <label>Selecione os alunos:</label>
+                                <Select
+                                    isMulti
+                                    options={alunosDisponiveis.map(aluno => ({ value: aluno.id, label: aluno.nome }))}
+                                    value={alunoSelecionadoId}
+                                    onChange={(selected) => setAlunoSelecionadoId(selected)}
+                                    className={style.reactSelect}
+                                    placeholder="Escolha os alunos para compartilhar"
+                                    classNamePrefix="reactSelect"
+                                />
 
                                 <div className={style.modalBotoes}>
                                     <button className={style.btnCompartilhar} onClick={compartilharTreino}>Compartilhar</button>
@@ -214,8 +215,8 @@ export function Dashboard() {
                 }
 
 
-            </Topbar>
-        </div>
+            </Topbar >
+        </div >
     )
 
 

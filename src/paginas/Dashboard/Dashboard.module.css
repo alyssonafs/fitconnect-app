@@ -228,6 +228,18 @@
     margin-top: 0.5rem;
 }
 
+.reactSelect__control {
+    border-radius: 0.375rem;
+    border: 1px solid #d1d5db;
+    min-height: 3rem;
+    font-size: 1rem;
+}
+
+.reactSelect__menu {
+    z-index: 9999;
+}
+
+
 .btnCompartilhar {
     width: 60%;
     height: 3rem;
