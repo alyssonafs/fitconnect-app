@@ -6,6 +6,7 @@ import TreinoAPI from "../../services/treinoAPI";
 import ExercicioAPI from "../../services/exercicioAPI";
 import style from "./DetalhesTreino.module.css";
 import UsuarioAPI from "../../services/usuarioAPI";
+import { toast } from 'react-toastify';
 
 export function DetalhesTreino() {
     const { id } = useParams();
@@ -44,7 +45,7 @@ export function DetalhesTreino() {
             const todosExercicios = await ExercicioAPI.listarAsync(true);
             setTodosExercicios(todosExercicios);
         } catch (error) {
-            alert("Erro ao carregar dados do treino.");
+            toast.error("Erro ao carregar dados do treino.");
         }
     }
 
@@ -53,7 +54,7 @@ export function DetalhesTreino() {
             const tiposGruposMusculares = await ExercicioAPI.listarTiposGruposMuscularesAsync();
             setGruposMusculares(tiposGruposMusculares);
         } catch (error) {
-            alert("Erro ao buscar grupos musculares!");
+            toast.error("Erro ao buscar grupos musculares!");
         }
     }
 
@@ -78,22 +79,22 @@ export function DetalhesTreino() {
     async function salvarNome() {
         try {
             await TreinoAPI.atualizarAsync(treino.id, nomeEditavel);
-            alert("Nome atualizado!");
+            toast.success("Nome atualizado!");
         } catch (error) {
-            alert("Erro ao salvar nome!");
+            toast.error("Erro ao salvar nome!");
         }
     }
 
     async function adicionarExercicio() {
         if (!exercicioSelecionado || !series) {
-            return alert("Preencha todos os campos!");
+            return toast.warn("Preencha todos os campos!");
         }
 
         const exercicioId = parseInt(exercicioSelecionado);
         const jaExiste = exercicios.some(e => e.exercicioId === exercicioId);
 
         if (jaExiste) {
-            return alert("Exercício já adicionado!");
+            return toast.warn("Exercício já adicionado!");
         }
 
         try {
@@ -112,7 +113,7 @@ export function DetalhesTreino() {
             setExercicioSelecionado("");
             setSeries("");
         } catch (error) {
-            alert("Erro ao adicionar exercício!");
+            toast.error("Erro ao adicionar exercício!");
         }
     }
 
@@ -122,7 +123,7 @@ export function DetalhesTreino() {
             await TreinoAPI.removerExercicioAsync(exercicioTreinoId);
             setExercicios(exercicios.filter(e => e.id !== exercicioTreinoId));
         } catch (error) {
-            alert("Erro ao remover exercício!");
+            toast.error("Erro ao remover exercício!");
         }
     }
 
@@ -132,7 +133,7 @@ export function DetalhesTreino() {
             await TreinoAPI.deletarAsync(treino.id);
             navigate("/dashboard");
         } catch {
-            alert("Erro ao excluir treino.");
+            toast.error("Erro ao excluir treino.");
         }
     }
 

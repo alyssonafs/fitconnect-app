@@ -9,6 +9,7 @@ import UsuarioAPI from '../../services/usuarioAPI';
 import { useNavigate } from "react-router-dom";
 import Topbar from '../../componentes/Topbar/Topbar';
 import GetUsuarioToken from '../../componentes/JwtDecode/GetUsuarioToken';
+import { toast } from 'react-toastify';
 
 export function EditarUsuario() {
 
@@ -120,11 +121,11 @@ export function EditarUsuario() {
                 parseInt(usuario.tipoUsuario)
             );
             setModoEdicao(false);
-            alert("Informações atualizadas com sucesso!");
+            toast.success("Informações atualizadas com sucesso!");
             navigate("/dashboard");
         } catch (error) {
             console.error('Erro ao atualizar usuário: ', error);
-            alert("Erro ao salvar as alterações!");
+            toast.error("Erro ao salvar as alterações!");
         }
 
     };

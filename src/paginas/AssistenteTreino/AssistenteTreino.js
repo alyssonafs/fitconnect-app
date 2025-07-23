@@ -7,6 +7,7 @@ import ExercicioAPI from '../../services/exercicioAPI';
 import TreinoAPI from '../../services/treinoAPI';
 import GetUsuarioToken from '../../componentes/JwtDecode/GetUsuarioToken';
 import UsuarioAPI from '../../services/usuarioAPI';
+import { toast } from 'react-toastify';
 
 const objetivos = ["Hipertrofia", "Definição", "Resistência"];
 
@@ -42,16 +43,16 @@ export function AssistenteTreino() {
 
         ExercicioAPI.listarTiposGruposMuscularesAsync()
             .then(setGruposMusculares)
-            .catch(() => alert("Erro ao buscar grupos musculares"));
+            .catch(() => toast.error("Erro ao buscar grupos musculares"));
 
         ExercicioAPI.listarAsync(true)
             .then(setExerciciosDisponiveis)
-            .catch(() => alert("Erro ao buscar exercícios"));
+            .catch(() => toast.error("Erro ao buscar exercícios"));
 
         if (isPersonal) {
             UsuarioAPI.listarUsuariosAsync()
                 .then(setUsuariosAlunos)
-                .catch(() => alert("Erro ao buscar alunos"));
+                .catch(() => toast.error("Erro ao buscar alunos"));
         }
     }, [usuario]);
 
@@ -77,7 +78,7 @@ export function AssistenteTreino() {
 
     const handleSubmit = async () => {
         if (!objetivo || gruposSelecionados.length === 0) {
-            setMensagem("Selecione objetivo e pelo menos 1 grupo muscular.");
+            toast.warn("Selecione objetivo e pelo menos 1 grupo muscular.");
             return;
         }
 
@@ -110,14 +111,14 @@ export function AssistenteTreino() {
         try {
             const plano = await TreinoAPI.gerarTreinoIaAsync(dto);
             setPlanoGerado(plano);
-            setMensagem("✅ Treino gerado com sucesso! Redirecionando...");
+            toast.success("Treino gerado com sucesso! Redirecionando...");
 
             setTimeout(() => {
                 navigate('/dashboard');
             }, 2000);
         } catch (error) {
             console.error(error);
-            setMensagem("❌ Erro ao gerar treino. Tente novamente.");
+            toast.error("Erro ao gerar treino. Tente novamente.");
         } finally {
             setLoading(false);
         }

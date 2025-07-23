@@ -5,6 +5,7 @@ import TreinoAPI from '../../services/treinoAPI';
 import style from './NovoTreino.module.css';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export function NovoTreino() {
 
@@ -25,7 +26,7 @@ export function NovoTreino() {
             const listaExercicios = await ExercicioAPI.listarAsync(true);
             setExercicios(listaExercicios);
         } catch (error) {
-            alert("Erro ao carregar exercícios!");
+            toast.error("Erro ao carregar exercícios!");
         }
     }
 
@@ -34,7 +35,7 @@ export function NovoTreino() {
             const tiposGruposMusculares = await ExercicioAPI.listarTiposGruposMuscularesAsync();
             setGruposMusculares(tiposGruposMusculares);
         } catch (error) {
-            alert("Erro ao buscar grupos musculares!");
+            toast.error("Erro ao buscar grupos musculares!");
         }
     }
 
@@ -45,23 +46,23 @@ export function NovoTreino() {
 
     async function criarTreino() {
         if (!nomeTreino) {
-            return alert("Informe um nome para o treino!");
+            return toast.warn("Informe um nome para o treino!");
         }
 
         try {
             const id = await TreinoAPI.criarAsync(nomeTreino, usuarioToken.usuarioId);
             setTreinoId(id);
         } catch (error) {
-            alert("Erro ao criar treino!");
+            toast.error("Erro ao criar treino!");
         }
     }
 
     async function adicionarExercicio() {
-        if (!exercicioSelecionado || !series) return alert("Selecione um exercício e informe as séries!");
+        if (!exercicioSelecionado || !series) return toast.warn("Selecione um exercício e informe as séries!");
 
         const exercicioExistente = exerciciosAdicionados.some(e => e.id === parseInt(exercicioSelecionado));
         if (exercicioExistente) {
-            return alert("Este exercício já foi adicionado ao treino.");
+            return toast.warn("Este exercício já foi adicionado ao treino.");
         }
 
         try {
@@ -84,12 +85,12 @@ export function NovoTreino() {
             setSeries("");
 
         } catch (error) {
-            alert("Erro ao adicionar exercício");
+            toast.error("Erro ao adicionar exercício");
         }
     }
 
     function finalizar() {
-        alert("Treino finalizado com sucesso!");
+        toast.success("Treino finalizado com sucesso!");
         navigate("/dashboard");
     }
 

@@ -7,6 +7,7 @@ import style from './Dashboard.module.css';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
+import { toast } from 'react-toastify';
 
 export function Dashboard() {
 
@@ -60,7 +61,7 @@ export function Dashboard() {
             const grupos = await ExercicioAPI.listarTiposGruposMuscularesAsync();
             setGruposMusculares(grupos);
         } catch (error) {
-            alert("Erro ao buscar grupos musculares!");
+            toast.error("Erro ao buscar grupos musculares!");
         }
     }
 
@@ -80,26 +81,26 @@ export function Dashboard() {
             setMostrarModal(true);
         } catch (error) {
             console.error("Erro ao buscar usuários:", error);
-            alert("Erro ao carregar lista de usuários.");
+            toast.error("Erro ao carregar lista de usuários.");
         }
     };
 
     const compartilharTreino = async () => {
         if (!alunoSelecionadoId || !treinoSelecionado) {
-            alert("Por favor, selecione pelo menos um aluno para compartilhar.");
+            toast.warn("Por favor, selecione pelo menos um aluno para compartilhar.");
             return;
         }
         try {
             for (const aluno of alunoSelecionadoId) {
                 await TreinoAPI.compartilharTreinoAsync(treinoSelecionado.id, aluno.value);
             }
-            alert("Treino compartilhado com sucesso!");
+            toast.success("Treino compartilhado com sucesso!");
             setMostrarModal(false);
             setAlunoSelecionadoId("");
             setTreinoSelecionado("");
         } catch (error) {
             console.error("Erro ao compartilhar treino:", error);
-            alert("Ocorreu um erro ao compartilhar o treino.");
+            toast.error("Ocorreu um erro ao compartilhar o treino.");
         }
     };
 
