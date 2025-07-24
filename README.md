@@ -1,70 +1,105 @@
-# Getting Started with Create React App
+## 1. Introdução
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Nome do Projeto
 
-## Available Scripts
+**FitConnect** - Sistema de Gestão de Treinos para Personal Trainers e Alunos
 
-In the project directory, you can run:
+### Breve Descrição e Motivação
 
-### `npm start`
+O FitConnect é uma plataforma digital que conecta personal trainers e alunos, digitalizando a gestão de treinos. Ele resolve o problema da ineficiência de métodos analógicos, oferecendo uma solução moderna e intuitiva para criação, personalização e acompanhamento de programas de exercícios. O sistema visa otimizar o trabalho dos profissionais e melhorar a experiência dos alunos, promovendo saúde e bem-estar.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+A motivação para o projeto surgiu da necessidade de aplicar conhecimentos em C# e desenvolvimento web para suprir a carência de ferramentas digitais no mercado fitness brasileiro. O FitConnect demonstra a aplicação de arquitetura de software avançada, integração com inteligência artificial (Google Gemini) para geração de treinos, e otimização de banco de dados com stored procedures.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 2. Tecnologias Utilizadas
 
-### `npm run build`
+O FitConnect foi desenvolvido com foco em performance, escalabilidade e manutenibilidade, utilizando as seguintes tecnologias:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+*   **Backend:** C# (.NET 6) com ASP.NET Core para a API RESTful, utilizando Entity Framework Core para acesso a dados e Microsoft SQL Server como banco de dados. A integração com o Google Gemini AI é fundamental para a funcionalidade de geração de treinos por inteligência artificial.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+*   **Frontend:** React 18 com JavaScript (ES6+) para a interface do usuário, utilizando React Router para navegação e Axios para comunicação com a API.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+*   **Ferramentas:** Visual Studio 2022, Visual Studio Code, Git, Postman e SQL Server Management Studio.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 3. Visão Geral do Sistema / Arquitetura
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+A arquitetura do FitConnect é dividida em três camadas principais, comunicando-se via API RESTful:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+*   **Frontend (React):** Interface do usuário, responsável pela interação e apresentação dos dados.
+*   **Backend (ASP.NET Core):** Lógica de negócio, autenticação, autorização e comunicação com o banco de dados e serviços externos. Segue princípios de Arquitetura em Camadas.
+*   **Banco de Dados (SQL Server):** Persistência de dados, utilizando Entity Framework Core e stored procedures para otimização de consultas.
 
-## Learn More
+Uma característica chave é a integração com o **Google Gemini AI** no backend para a geração inteligente de treinos, e o uso de **stored procedures** no SQL Server para otimizar a busca e filtragem de treinos, garantindo alta performance.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+## 4. Funcionalidades Principais
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+O FitConnect oferece as seguintes funcionalidades essenciais:
 
-### Analyzing the Bundle Size
+*   **Cadastro e Autenticação:** Permite o registro e login seguro de personal trainers e alunos.
+*   **Criação e Gestão de Treinos:** Personal trainers podem criar treinos personalizados, adicionar exercícios e definir detalhes como séries e repetições.
+*   **Geração de Treinos por IA:** Uma funcionalidade inovadora que permite gerar treinos automaticamente com base em dados do aluno (peso, altura, idade, IMC, grupos musculares, objetivo) utilizando o Google Gemini AI.
+*   **Visualização de Treinos:** Alunos acessam seus treinos de forma clara e detalhada, com vídeos explicativos para cada exercício.
+*   **Compartilhamento de Treinos:** Personal trainers podem compartilhar treinos específicos com seus alunos.
+*   **Busca Otimizada:** Funcionalidade de busca e filtro de treinos otimizada por stored procedures no banco de dados, garantindo rapidez e eficiência.
+*   **Dashboards:** Painéis personalizados para personal trainers (gerenciamento de alunos e treinos) e alunos (visualização de treinos).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 5. Configuração do Ambiente
 
-### Advanced Configuration
+Para configurar o ambiente de desenvolvimento do FitConnect, são necessários:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+*   **Software:** .NET SDK 6.0, Node.js (LTS), Microsoft SQL Server, Visual Studio 2022, Visual Studio Code, Git, Postman, SSMS.
+*   **Hardware:** Processador i5 (8ª Gen+), 8GB RAM (16GB recomendado), 256GB SSD (512GB recomendado).
 
-### Deployment
+**Passos Essenciais:**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+1.  Clonar o repositório do projeto.
+2.  Configurar a string de conexão do SQL Server no `appsettings.json` do backend e executar as migrações do Entity Framework Core (`dotnet ef database update`).
+3.  Configurar a chave da API do Google Gemini e as chaves JWT no `appsettings.json` do backend.
+4.  Instalar as dependências do frontend (`npm install`) e verificar a URL da API no `src/services/client.js`.
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## 6. Desenvolvimento (Estrutura)
+
+O projeto é dividido em backend (C#) e frontend (React), cada um com sua estrutura organizada:
+
+*   **Backend (`FitconnectAPI`):** Solução .NET com projetos separados por camadas (API, Aplicação, Domínio, Repositório, Serviços Externos), seguindo Clean Architecture para modularidade e testabilidade.
+*   **Frontend (`src`):** Aplicação React com pastas para páginas, componentes reutilizáveis, serviços de comunicação com a API e recursos estáticos, promovendo modularidade e reuso.
+
+
+
+## 7. API
+
+A API RESTful do FitConnect, desenvolvida em ASP.NET Core, é o ponto central de comunicação. Ela expõe endpoints para gerenciamento de usuários, treinos, exercícios e compartilhamentos. A documentação interativa é gerada automaticamente via Swagger/OpenAPI, acessível em `http://localhost:5000/swagger` (ou porta configurada).
+
+**Principais Endpoints:**
+
+*   `/api/auth/login`: Autenticação de usuários (POST).
+*   `/api/usuarios`: Criação e gestão de usuários (POST, PUT, GET).
+*   `/api/treinos`: Criação, listagem e detalhes de treinos (POST, GET).
+*   `/api/treinos/gerar-ia`: Geração de treinos por IA (POST).
+*   `/api/exercicios`: Listagem e detalhes de exercícios (GET).
+*   `/api/treinos-compartilhados`: Compartilhamento de treinos (POST, GET).
+
+
+
+## 8. Conclusão e Próximos Passos
+
+O FitConnect é uma solução robusta e inovadora para a gestão de treinos, demonstrando a aplicação de tecnologias modernas e boas práticas de desenvolvimento. Ele otimiza o trabalho de personal trainers e enriquece a experiência dos alunos, com destaque para a geração de treinos por IA e a otimização de buscas.
+
+**Melhorias Futuras:**
+
+*   Integração com YouTube API para vídeos de exercícios.
+*   Módulo de pagamentos e assinaturas.
+*   Acompanhamento de progresso do aluno.
+*   Chat e comunicação interna.
+*   Desenvolvimento de aplicativo móvel nativo.
+
+

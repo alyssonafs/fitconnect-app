@@ -9,13 +9,13 @@
   padding: 2rem;
 }
 
-h1 {
+.pagina404 h1 {
   font-size: 3rem;
   color: #1f2937;
   margin-bottom: 1rem;
 }
 
-p {
+.pagina404 p {
   font-size: 1.25rem;
   color: #374151;
   margin-bottom: 2rem;

@@ -51,7 +51,7 @@
 
 .videoContainer iframe,
 .cardExercicio video {
-    max-height: 180px;
+    max-height: 200px;
 }
 
 .cardExercicio:hover {
