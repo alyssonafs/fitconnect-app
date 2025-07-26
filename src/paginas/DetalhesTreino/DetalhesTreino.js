@@ -190,6 +190,7 @@ export function DetalhesTreino() {
                                 value={nomeEditavel}
                                 onChange={(e) => setNomeEditavel(e.target.value)}
                                 placeholder="Nome do treino"
+                                maxLength={100}
                             />
                             <button className={style.btnForm} onClick={salvarNome}>Salvar nome</button>
 
@@ -225,6 +226,7 @@ export function DetalhesTreino() {
                                 placeholder="Séries (ex: 3x12)"
                                 value={series}
                                 onChange={(e) => setSeries(e.target.value)}
+                                maxLength={25}
                             />
                             <button className={style.btnForm} onClick={adicionarExercicio}>Adicionar Exercício</button>
                         </div>

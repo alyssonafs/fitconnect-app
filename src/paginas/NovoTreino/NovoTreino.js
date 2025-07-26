@@ -153,6 +153,7 @@ export function NovoTreino() {
                                     placeholder="Ex: 3x12"
                                     value={series}
                                     onChange={(e) => setSeries(e.target.value)}
+                                    maxLength={25}
                                 />
                             </div>
 

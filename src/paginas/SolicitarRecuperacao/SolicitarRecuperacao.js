@@ -19,7 +19,7 @@ const SolicitarRecuperacao = () => {
             navigate('/redefinir-senha', { state: { email } });
         } catch (error) {
             console.error(error);
-            setErro('E-mail não cadastrado.');
+            setErro('Verifique sua caxa de e-mails e siga o passo a passo para redefinição.');
         }
 
     };

@@ -86,7 +86,7 @@ export function Dashboard() {
     };
 
     const compartilharTreino = async () => {
-        if (!alunoSelecionadoId || !treinoSelecionado) {
+        if (alunoSelecionadoId.length === 0) {
             toast.warn("Por favor, selecione pelo menos um aluno para compartilhar.");
             return;
         }
