@@ -8,8 +8,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import { toast } from 'react-toastify';
+import ReactPaginate from 'react-paginate';
 
 export function Dashboard() {
+
+    const [paginaAtual, setPaginaAtual] = useState(0);
+    const itensPorPagina = 12;
 
     const usuarioToken = GetUsuarioToken();
     const [usuario, setUsuario] = useState(null);
@@ -24,6 +28,10 @@ export function Dashboard() {
     const [treinoSelecionado, setTreinoSelecionado] = useState(null);
     const [alunosDisponiveis, setAlunosDisponiveis] = useState([]);
     const [alunoSelecionadoId, setAlunoSelecionadoId] = useState([]);
+
+    const contadorPagina = Math.ceil(treinos.length / itensPorPagina);
+    const deslocamento = paginaAtual * itensPorPagina;
+    const treinosAtuais = treinos.slice(deslocamento, deslocamento + itensPorPagina);
 
     async function fetchUsuario(usuarioToken) {
         try {
@@ -68,6 +76,7 @@ export function Dashboard() {
     function handleGrupoChange(e) {
         const valor = e.target.value;
         setGrupoSelecionado(valor);
+        setPaginaAtual(0);
     }
 
     const abrirModalCompartilhar = async (treino) => {
@@ -103,6 +112,10 @@ export function Dashboard() {
             toast.error("Ocorreu um erro ao compartilhar o treino.");
         }
     };
+
+    const handleTrocaDePagina = ({ selected }) => {
+        setPaginaAtual(selected);
+    }
 
     useEffect(() => {
         if (usuarioToken) {
@@ -156,10 +169,10 @@ export function Dashboard() {
                     <div className={style.treinosGrid}>
                         {carregando ? (
                             <p>Carregando treinos...</p>
-                        ) : treinos.length === 0 ? (
+                        ) : treinosAtuais.length === 0 ? (
                             <p>Nenhum treino disponível.</p>
                         ) : (
-                            treinos.map((treino) => (
+                            treinosAtuais.map((treino) => (
                                 <div key={treino.id} className={style.cardTreino}>
 
                                     <h3 title={treino.nome}>{treino.nome}</h3>
@@ -176,7 +189,6 @@ export function Dashboard() {
                                             <p>Consulte um personal trainer, pois esta é apenas uma sugestão e você deve confirmar seus dados e vieses.</p>
                                         </div>
                                     )}
-
                                     <div className={style.botoesCard}>
                                         {isPersonal && treino.personalId === usuario.id && (
                                             <button onClick={() => abrirModalCompartilhar(treino)}>Compartilhar</button>
@@ -187,8 +199,29 @@ export function Dashboard() {
                             ))
                         )}
                     </div>
+                    {treinos.length > itensPorPagina && (
+                        <ReactPaginate
+                            previousLabel="‹"
+                            nextLabel="›"
+                            breakLabel="…"
+                            pageCount={contadorPagina}
+                            marginPagesDisplayed={1}
+                            pageRangeDisplayed={3}
+                            onPageChange={handleTrocaDePagina}
+                            forcePage={paginaAtual}
+                            containerClassName={style.paginacao}
+                            pageClassName={style.itemPagina}
+                            pageLinkClassName={style.linkPagina}
+                            previousClassName={style.itemPagina}
+                            previousLinkClassName={style.linkPagina}
+                            nextClassName={style.itemPagina}
+                            nextLinkClassName={style.linkPagina}
+                            breakClassName={style.itemPagina}
+                            breakLinkClassName={style.linkPagina}
+                            activeClassName={style.paginaAtiva}
+                        />
+                    )}
                 </div>
-
                 {
                     mostrarModal && (
                         <div className={style.modalOverlay}>
@@ -214,8 +247,6 @@ export function Dashboard() {
                         </div>
                     )
                 }
-
-
             </Topbar >
         </div >
     )

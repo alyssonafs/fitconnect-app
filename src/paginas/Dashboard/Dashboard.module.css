@@ -164,6 +164,34 @@
     font-weight: 500;
 }
 
+.paginacao {
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0;
+    margin: 1.5rem 0;
+}
+
+.linkPagina {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    background: white;
+    text-decoration: none;
+}
+
+.linkPagina:hover {
+    background: #f0f0f0;
+}
+
+.paginaAtiva .linkPagina {
+    background: #2563eb;
+    color: white;
+    border-color: #2563eb;
+}
+
 .modalOverlay {
     position: fixed;
     top: 0;
