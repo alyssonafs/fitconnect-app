@@ -68,7 +68,7 @@ export function EditarUsuario() {
         if (!valor) return;
         const exists = await checkEmailExists(valor);
         setEmailError(exists
-            ? 'Este e‑mail já está em uso por outro usuário.'
+            ? 'Este e‑mail está indisponível.'
             : ''
         );
     };

@@ -61,7 +61,7 @@ export function NovoUsuario() {
         if (!email) return;
         const exists = await checkEmailExists(email);
         if (exists) {
-            setEmailError('Este e‑mail já está em uso.');
+            setEmailError('Este e‑mail está indisponível.');
         }
     };
 

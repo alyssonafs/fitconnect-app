@@ -66,7 +66,7 @@ export function NovoTreino() {
         }
 
         try {
-            await TreinoAPI.adicionarExericio(
+            const response = await TreinoAPI.adicionarExericio(
                 treinoId,
                 parseInt(exercicioSelecionado),
                 series
@@ -75,6 +75,7 @@ export function NovoTreino() {
             const exercicio = exercicios.find(e => e.id === parseInt(exercicioSelecionado));
 
             setExerciciosAdicionados([...exerciciosAdicionados, {
+                exercicioTreinoId: response,
                 id: exercicio.id,
                 nome: exercicio.nome,
                 series,
@@ -86,6 +87,16 @@ export function NovoTreino() {
 
         } catch (error) {
             toast.error("Erro ao adicionar exercício");
+        }
+    }
+
+    async function excluirExercicio(exercicioTreinoId) {
+        try {
+            await TreinoAPI.removerExercicioAsync(exercicioTreinoId);
+            setExerciciosAdicionados(prev => prev.filter(ex => ex.exercicioTreinoId !== exercicioTreinoId));
+            toast.info("Exercício removido do treino.");
+        } catch (error) {
+            toast.error("Erro ao remover exercício!");
         }
     }
 
@@ -160,9 +171,22 @@ export function NovoTreino() {
                             <button className={style.btnForm} onClick={adicionarExercicio}>Adicionar Exercício</button>
 
                             <h4>Exercícios adicionados:</h4>
-                            <ul>
-                                {exerciciosAdicionados.map((ex, index) => (
-                                    <li className={style.input} key={index}>{ex.nome} - {ex.series}</li>
+                            <ul className={style.listaExercicios}>
+                                {exerciciosAdicionados.map(ex => (
+                                    <li className={style.itemExercicio} key={ex.exercicioTreinoId}>
+                                        <span>{ex.nome} - {ex.series}</span>
+                                        <div className={style.removerContainer}>
+                                            <button
+                                                className={style.btnExcluir}
+                                                onClick={() =>
+                                                    excluirExercicio(ex.exercicioTreinoId)
+                                                }
+                                            >
+                                                Remover
+                                            </button>
+                                        </div>
+
+                                    </li>
                                 ))}
                             </ul>
 
