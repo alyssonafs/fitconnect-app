@@ -8,6 +8,7 @@ import { GiBodyHeight } from "react-icons/gi";
 import { LiaBirthdayCakeSolid } from "react-icons/lia";
 import UsuarioAPI from '../../services/usuarioAPI';
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 export function NovoUsuario() {
 
@@ -86,6 +87,7 @@ export function NovoUsuario() {
             const tipoGeneroId = parseInt(tipoGenero);
             const tipoUsuarioId = parseInt(tipoUsuario);
             await UsuarioAPI.criarAsync(nome, email, senha, altura, peso, dataNascimento, tipoGeneroId, tipoUsuarioId);
+            toast.success("Usuário cadastrado com sucesso.");
             navigate('/');
         } catch (error) {
             console.error('Erro ao cadastrar usuário: ', error);
